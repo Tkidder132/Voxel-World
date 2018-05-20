@@ -283,41 +283,40 @@ MonoBehaviour:
   zoomRate: 40
   panSpeed: 0.3
   zoomDampening: 5
---- !u!1 &1121589898
+--- !u!1 &2027888613
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 1121589900}
-  - component: {fileID: 1121589899}
+  - component: {fileID: 2027888615}
+  - component: {fileID: 2027888614}
   m_Layer: 0
-  m_Name: World
+  m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1121589899
+--- !u!114 &2027888614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1121589898}
+  m_GameObject: {fileID: 2027888613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0663965d7084d664fb9934dd9f312ae0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a4133fc7891c804f9c784e38ad7626d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  block: {fileID: 1443555644069356, guid: e537ce1b6cbd3bf44b61ad31f0907b41, type: 2}
-  worldSize: 5
---- !u!4 &1121589900
+  cubeMaterial: {fileID: 2100000, guid: 1af41386b6aebff43af8aff2e57927a8, type: 2}
+--- !u!4 &2027888615
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1121589898}
+  m_GameObject: {fileID: 2027888613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
