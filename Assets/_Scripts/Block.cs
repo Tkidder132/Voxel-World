@@ -6,9 +6,10 @@ public class Block
 {
 
     enum Cubeside { BOTTOM, TOP, LEFT, RIGHT, FRONT, BACK };
-    public enum BlockType { GRASS, DIRT, STONE };
+    public enum BlockType { GRASS, DIRT, STONE, AIR };
 
     BlockType bType;
+    public bool isSolid;
     GameObject parent;
     Vector3 position;
     Material cubeMaterial;
@@ -30,6 +31,10 @@ public class Block
         parent = p;
         position = pos;
         cubeMaterial = c;
+        if (bType == BlockType.AIR)
+            isSolid = false;
+        else
+            isSolid = true;
     }
 
     void CreateQuad(Cubeside side)
@@ -140,17 +145,37 @@ public class Block
         MeshFilter meshFilter = (MeshFilter)quad.AddComponent(typeof(MeshFilter));
         meshFilter.mesh = mesh;
 
-        MeshRenderer renderer = quad.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
-        renderer.material = cubeMaterial;
+        //MeshRenderer renderer = quad.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
+        //renderer.material = cubeMaterial;
+    }
+
+    public bool HasSolidNeighbour(int x, int y, int z)
+    {
+        Block[,,] chunks = parent.GetComponent<Chunk>().chunkData;
+        try
+        {
+            return chunks[x, y, z].isSolid;
+        }
+        catch (System.IndexOutOfRangeException ex) { }
+
+        return false;
     }
 
     public void Draw()
     {
-        CreateQuad(Cubeside.FRONT);
-        CreateQuad(Cubeside.BACK);
-        CreateQuad(Cubeside.TOP);
-        CreateQuad(Cubeside.BOTTOM);
-        CreateQuad(Cubeside.LEFT);
-        CreateQuad(Cubeside.RIGHT);
+        if (bType == BlockType.AIR) return;
+
+        if (!HasSolidNeighbour((int)position.x, (int)position.y, (int)position.z + 1))
+            CreateQuad(Cubeside.FRONT);
+        if (!HasSolidNeighbour((int)position.x, (int)position.y, (int)position.z - 1))
+            CreateQuad(Cubeside.BACK);
+        if (!HasSolidNeighbour((int)position.x, (int)position.y + 1, (int)position.z))
+            CreateQuad(Cubeside.TOP);
+        if (!HasSolidNeighbour((int)position.x, (int)position.y - 1, (int)position.z))
+            CreateQuad(Cubeside.BOTTOM);
+        if (!HasSolidNeighbour((int)position.x - 1, (int)position.y, (int)position.z))
+            CreateQuad(Cubeside.LEFT);
+        if (!HasSolidNeighbour((int)position.x + 1, (int)position.y, (int)position.z))
+            CreateQuad(Cubeside.RIGHT);
     }
 }
