@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
+
     public Material textureAtlas;
     public static int columnHeight = 16;
     public static int chunkSize = 16;
-    public int worldSize = 2;
+    public static int worldSize = 2;
     public static Dictionary<string, Chunk> chunks;
 
     public static string BuildChunkName(Vector3 v)
