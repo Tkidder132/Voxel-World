@@ -51,33 +51,34 @@ public class Chunk
 
     bool Load() //read data from file
     {
-        /*string chunkFile = BuildChunkFileName(chunk.transform.position);
-		if(File.Exists(chunkFile))
-		{
-			BinaryFormatter bf = new BinaryFormatter();
-			FileStream file = File.Open(chunkFile, FileMode.Open);
-			bd = new BlockData();
-			bd = (BlockData) bf.Deserialize(file);
-			file.Close();
-			//Debug.Log("Loading chunk from file: " + chunkFile);
-			return true;
-		}*/
+        string chunkFile = BuildChunkFileName(chunk.transform.position);
+        if (File.Exists(chunkFile))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(chunkFile, FileMode.Open);
+            bd = new BlockData();
+            bd = (BlockData)bf.Deserialize(file);
+            file.Close();
+            //Debug.Log("Loading chunk from file: " + chunkFile);
+            return true;
+        }
         return false;
     }
 
     public void Save() //write data to file
     {
-        /*string chunkFile = BuildChunkFileName(chunk.transform.position);
-		
-		if(!File.Exists(chunkFile))
-		{
-			Directory.CreateDirectory(Path.GetDirectoryName(chunkFile));
-		}
-		BinaryFormatter bf = new BinaryFormatter();
-		FileStream file = File.Open(chunkFile, FileMode.OpenOrCreate);
-		bd = new BlockData(chunkData);
-		bf.Serialize(file, bd);
-		file.Close();*/
+        string chunkFile = BuildChunkFileName(chunk.transform.position);
+
+        if (!File.Exists(chunkFile))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(chunkFile));
+        }
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open(chunkFile, FileMode.OpenOrCreate);
+        bd = new BlockData(chunkData);
+        bf.Serialize(file, bd);
+        file.Close();
+        //Debug.Log("Saving chunk from file: " + chunkFile);
     }
 
     void BuildChunk()
@@ -105,10 +106,8 @@ public class Chunk
 
                     int surfaceHeight = Utils.GenerateHeight(worldX, worldZ);
 
-                    if (Utils.fBM3D(worldX, worldY, worldZ, 0.1f, 3) < 0.42f)
-                        chunkData[x, y, z] = new Block(Block.BlockType.AIR, pos,
-                                        chunk.gameObject, this);
-                    else if (worldY == 0)
+
+                    if (worldY == 0)
                         chunkData[x, y, z] = new Block(Block.BlockType.BEDROCK, pos,
                                         chunk.gameObject, this);
                     else if (worldY <= Utils.GenerateStoneHeight(worldX, worldZ))
@@ -131,11 +130,19 @@ public class Chunk
                     else if (worldY < surfaceHeight)
                         chunkData[x, y, z] = new Block(Block.BlockType.DIRT, pos,
                                         chunk.gameObject, this);
+                    else if (worldY < 75)
+                        chunkData[x, y, z] = new Block(Block.BlockType.WATER, pos,
+                                        fluid.gameObject, this);
                     else
                     {
                         chunkData[x, y, z] = new Block(Block.BlockType.AIR, pos,
                                         chunk.gameObject, this);
                     }
+
+                    if (chunkData[x, y, z].bType != Block.BlockType.WATER && Utils.fBM3D(worldX, worldY, worldZ, 0.1f, 3) < 0.42f)
+                        chunkData[x, y, z] = new Block(Block.BlockType.AIR, pos,
+                                        chunk.gameObject, this);
+
 
                     status = ChunkStatus.DRAW;
 

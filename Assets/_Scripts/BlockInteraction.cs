@@ -19,17 +19,24 @@ public class BlockInteraction : MonoBehaviour
     {
 
         if (Input.GetKeyDown("1"))
-            buildtype = Block.BlockType.STONE;
+            buildtype = Block.BlockType.WATER;
         if (Input.GetKeyDown("2"))
-            buildtype = Block.BlockType.DIAMOND;
+            buildtype = Block.BlockType.STONE;
         if (Input.GetKeyDown("3"))
-            buildtype = Block.BlockType.REDSTONE;
+            buildtype = Block.BlockType.DIAMOND;
         if (Input.GetKeyDown("4"))
+            buildtype = Block.BlockType.REDSTONE;
+        if (Input.GetKeyDown("5"))
             buildtype = Block.BlockType.GOLD;
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
+
+            //for mouse clicking
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+            //if ( Physics.Raycast (ray,out hit,10)) 
+            //{
 
             //for cross hairs
             if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10))
@@ -45,6 +52,10 @@ public class BlockInteraction : MonoBehaviour
                 }
                 else
                     hitBlock = hit.point + hit.normal / 2.0f;
+
+                //int x = (int) (Mathf.Round(hitBlock.x) - hit.collider.gameObject.transform.position.x);
+                //int y = (int) (Mathf.Round(hitBlock.y) - hit.collider.gameObject.transform.position.y);
+                //int z = (int) (Mathf.Round(hitBlock.z) - hit.collider.gameObject.transform.position.z);
 
                 Block b = World.GetWorldBlock(hitBlock);
                 Debug.Log(b.position);
@@ -66,6 +77,8 @@ public class BlockInteraction : MonoBehaviour
                     float thisChunkx = hitc.chunk.transform.position.x;
                     float thisChunky = hitc.chunk.transform.position.y;
                     float thisChunkz = hitc.chunk.transform.position.z;
+
+                    //updates.Add(hit.collider.gameObject.name);
 
                     //update neighbours?
                     if (b.position.x == 0)
