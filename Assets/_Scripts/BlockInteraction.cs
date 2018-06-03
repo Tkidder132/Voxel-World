@@ -28,6 +28,8 @@ public class BlockInteraction : MonoBehaviour
             buildtype = Block.BlockType.REDSTONE;
         if (Input.GetKeyDown("5"))
             buildtype = Block.BlockType.GOLD;
+        if (Input.GetKeyDown("6"))
+            buildtype = Block.BlockType.SAND;
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
